@@ -19,10 +19,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea} from "@/components/ui/textarea"
 
 import Image from 'next/image';
+import { useUploadThing } from '@/lib/uploadthing';
 
 
 import * as z from "zod"
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 
 interface props {
@@ -40,6 +41,7 @@ interface props {
 }
 
 const AccountProfile = ({user, btnTitle} : props ) => {
+    const [files, setFiles ] = useState<File[]> ([])
     
     const form = useForm({
         resolver: zodResolver( UserValidation  ),
@@ -50,10 +52,32 @@ const AccountProfile = ({user, btnTitle} : props ) => {
             bio: user?.bio || '',
         }
     })
+    
+    // handle image
 
-    const handleImage = (e: ChangeEvent, fieldChange: (value: string)  => void )  => {
+    const handleImage = (
+      e: ChangeEvent<HTMLInputElement>,
+      fieldChange: (value: string) => void
+    ) => {
       e.preventDefault();
-    }
+  
+      const fileReader = new FileReader();
+  
+      if (e.target.files && e.target.files.length > 0) {
+        const file = e.target.files[0];
+        setFiles(Array.from(e.target.files));
+  
+        if (!file.type.includes("image")) return;
+  
+        fileReader.onload = async (event) => {
+          const imageDataUrl = event.target?.result?.toString() || "";
+          fieldChange(imageDataUrl);
+        };
+  
+        fileReader.readAsDataURL(file);
+      }
+    };
+
 
      // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof UserValidation>) {
@@ -111,7 +135,7 @@ const AccountProfile = ({user, btnTitle} : props ) => {
           control={form.control}
           name='name'
           render={({ field }) => (
-            <FormItem className='flex flex-col w-full  gap-3'>
+            <FormItem className='flex flex-col w-full gap-3'>
               <FormLabel className='text-base-semibold text-light-2'>
                 Name
               </FormLabel>
@@ -131,9 +155,9 @@ const AccountProfile = ({user, btnTitle} : props ) => {
           control={form.control}
           name='username'
           render={({ field }) => (
-            <FormItem className='flex flex-col w-full  gap-3'>
+            <FormItem className='flex flex-col w-full gap-3'>
               <FormLabel className='text-base-semibold text-light-2'>
-                Name
+                Username
               </FormLabel>
               <FormControl>
                 <Input
@@ -151,9 +175,9 @@ const AccountProfile = ({user, btnTitle} : props ) => {
           control={form.control}
           name='bio'
           render={({ field }) => (
-            <FormItem className='flex flex-col w-full  gap-3'>
+            <FormItem className='flex flex-col w-full gap-3'>
               <FormLabel className='text-base-semibold text-light-2'>
-                Name
+                Bio
               </FormLabel>
               <FormControl>
                 <Textarea
