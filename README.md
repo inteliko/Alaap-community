@@ -37,16 +37,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## .env Local files  
 
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_ZXZvbHZlZC1sb29uLTUuY2xlcmsuYWNjb3VudHMuZGV2JA
-CLERK_SECRET_KEY=sk_test_FSzGILu1pXvDqiGQfCJCHP3zIbB267uFconFh9v19E
 
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
-
-
-MONGODB_URL=mongodb+srv://alaap:Mak1122..@alaap.iohapfm.mongodb.net/?retryWrites=true&w=majority
-
-UPLOADTHING_SECRET=sk_live_cc6584fad1d5ec977dce011ecee5be218a8da6faafc05f0ef701514678575624
-UPLOADTHING_APP_ID=5b8c30vs8p
