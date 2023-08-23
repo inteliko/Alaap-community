@@ -61,4 +61,30 @@ export async function fetchUser( userId: string ){
 }
 
 
+export async function fetchUserPosts( userid: string ){
+    try {
+        connectToDB();
+        
+        const threads = await User.findOne({ id: userid })
+            .populate({
+                path:'threads',
+                model: Thread,
+                populate: {
+                    path: 'children',
+                    model: Thread,
+                    populate: {
+                        path: 'author',
+                        model: User,
+                        select: 'name image id'
+                    }
+                }
+            })
+
+            return threads;
+        
+    } catch (error: any) {
+        throw new Error(`Failed to fetch user posts: ${error.message}`)
+    }
+}
+
 
