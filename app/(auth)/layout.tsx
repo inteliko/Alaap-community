@@ -9,7 +9,7 @@ import '../globals.css'
 
 export const metadata = {
     title: 'Alaap',
-    description: 'A platform for developer where they can connect with other developer. Share new Ideas , Publish their thoughts and comment on each other posts.'
+    description: 'A Place for Developers to Share Projects, Ask Questions & Have Discussion '
 }
 
 const inter = Inter({ subsets: ['latin'] })
